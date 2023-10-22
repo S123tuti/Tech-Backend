@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt')
+const ObjectId = mongoose.Schema.Types.ObjectId
 
 const taskSchema = new mongoose.Schema({
   title:{
@@ -13,16 +15,17 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true,
-    trim: true,
+        required: true,
+        enum: ["in-progress", "completed"]
   },
   dueDate: {
     type: Date,
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  UserId: {
+    type: ObjectId,
+    required: true,
+    ref: 'User'
+  }
 }, {timestamps: true});
 
 const Task = mongoose.model('Task', taskSchema);
